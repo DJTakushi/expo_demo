@@ -19,3 +19,5 @@ Suggestion by boilerplate:
 Step 3: Get a fresh start
 When you're ready, run npm run reset-project to get a fresh app directory. This will move the current app to app-example.
 ```
+
+Warnings about deprecated dependencies seems normal : https://www.reddit.com/r/expo/comments/1egsevn/dependency_issues_while_creating_a_new_app/

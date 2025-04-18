@@ -1,4 +1,4 @@
-import { StyleSheet, Image, Platform } from 'react-native';
+import { StyleSheet, Button, TextInput, Platform } from 'react-native';
 
 import { Collapsible } from '@/components/Collapsible';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -9,11 +9,17 @@ import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 const supabase = createClient("https://utlankoqlpvjmwacdzai.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0bGFua29xbHB2am13YWNkemFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4NTQxNjMsImV4cCI6MjA2MDQzMDE2M30.JpiWZ67ayIrDxrpTWDhh5LppurXaxs1Cwye-nwJz7CI");
 
+/* this isn't in the official docs, but the official examples for produce 
+    warnings in the codebase.  Defining these classes seems to be safer.
+*/
 type Instrument = {
-  name: string; // Adjust this type based on your actual data structure
+  name: string;
+  description: string;
 };
 
 export default function TabThreeScreen() {
+  const [InputName, setInputName] = useState('instrument name');
+  const [InputDescription, setInputDescription] = useState('instrument description');
   const [instruments, setInstruments] = useState<Instrument[] | null>(null);
   useEffect(() => {
     getInstruments();
@@ -21,6 +27,10 @@ export default function TabThreeScreen() {
   async function getInstruments() {
     const { data } = await supabase.from("instruments").select();
     setInstruments(data);
+  }
+  async function addInstrument(name: string, desc: string) {
+    const { data } = await supabase.from("instruments").insert({ name: name, description: desc });
+    getInstruments();
   }
 
   return (
@@ -40,10 +50,26 @@ export default function TabThreeScreen() {
       <ThemedText>
         <ul>
           {instruments?.map((instrument) => (
-            <li key={instrument.name}>{instrument.name}</li>
+            <li key={instrument.name}>{instrument.name}, {instrument.description}</li>
           ))}
         </ul>
       </ThemedText>
+      <TextInput
+        style={styles.input}
+        onChangeText={setInputName}
+        value={InputName}
+      />
+      <TextInput
+        style={styles.input}
+        onChangeText={setInputDescription}
+        value={InputDescription}
+        placeholder="useless placeholder"
+        keyboardType="numeric"
+      />
+      <Button
+        title="Press me"
+        onPress={() => addInstrument(InputName, InputDescription)}
+      />
     </ParallaxScrollView>
   );
 }
@@ -58,5 +84,11 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     gap: 8,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
   },
 });

@@ -54,18 +54,16 @@ export default function TabThreeScreen() {
           ))}
         </ul>
       </ThemedText>
-      <TextInput
-        style={styles.input}
-        onChangeText={setInputName}
-        value={InputName}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={setInputDescription}
-        value={InputDescription}
-        placeholder="useless placeholder"
-        keyboardType="numeric"
-      />
+        <TextInput
+          style={styles.input}
+          onChangeText={setInputName}
+          value={InputName}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={setInputDescription}
+          value={InputDescription}
+        />
       <Button
         title="Press me"
         onPress={() => addInstrument(InputName, InputDescription)}
@@ -90,5 +88,6 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    color :  '#808080'
   },
 });

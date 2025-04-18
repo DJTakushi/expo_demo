@@ -10,8 +10,12 @@ import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 const supabase = createClient("https://utlankoqlpvjmwacdzai.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0bGFua29xbHB2am13YWNkemFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4NTQxNjMsImV4cCI6MjA2MDQzMDE2M30.JpiWZ67ayIrDxrpTWDhh5LppurXaxs1Cwye-nwJz7CI");
 
-export default function TabTwoScreen() {
-  const [instruments, setInstruments] = useState([]);
+type Instrument = {
+  name: string; // Adjust this type based on your actual data structure
+};
+
+export default function TabThreeScreen() {
+  const [instruments, setInstruments] = useState<Instrument[] | null>(null);
   useEffect(() => {
     getInstruments();
   }, []);
@@ -33,12 +37,14 @@ export default function TabTwoScreen() {
       }>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">foo</ThemedText>
-        <ul>
-        {instruments.map((instrument) => (
-          <li key={instrument.name}>{instrument.name}</li>
-        ))}
-    </ul>
       </ThemedView>
+      <ThemedText>
+        <ul>
+          {instruments?.map((instrument) => (
+            <li key={instrument.name}>{instrument.name}</li>
+          ))}
+        </ul>
+      </ThemedText>
     </ParallaxScrollView>
   );
 }

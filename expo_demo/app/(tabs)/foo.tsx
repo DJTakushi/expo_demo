@@ -51,6 +51,8 @@ export default function TabThreeScreen() {
         <ul>
           {instruments?.map((instrument) => (
             <li key={instrument.name}>{instrument.name}, {instrument.description}</li>
+            //  replace with table : https://www.waldo.com/blog/react-native-table
+            // https://reactnativepaper.com/
           ))}
         </ul>
       </ThemedText>

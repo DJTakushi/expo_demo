@@ -53,8 +53,8 @@ export default function TabThreeScreen() {
       <ThemedText>
         <DataTable>
           <DataTable.Header>
-            <DataTable.Title><ThemedText>Dessert</ThemedText></DataTable.Title>
-            <DataTable.Title numeric><ThemedText>Calories</ThemedText></DataTable.Title>
+            <DataTable.Title><ThemedText>name</ThemedText></DataTable.Title>
+            <DataTable.Title><ThemedText>description</ThemedText></DataTable.Title>
           </DataTable.Header>
           {instruments?.map((instrument) => (
             <DataTable.Row key={instrument.name}>

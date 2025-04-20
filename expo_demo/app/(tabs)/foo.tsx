@@ -59,7 +59,7 @@ export default function TabThreeScreen() {
           {instruments?.map((instrument) => (
             <DataTable.Row key={instrument.name}>
               <DataTable.Cell><ThemedText>{instrument.name}</ThemedText></DataTable.Cell>
-              <DataTable.Cell numeric><ThemedText>{instrument.description}</ThemedText></DataTable.Cell>
+              <DataTable.Cell><ThemedText>{instrument.description}</ThemedText></DataTable.Cell>
             </DataTable.Row>
           ))}
         </DataTable>

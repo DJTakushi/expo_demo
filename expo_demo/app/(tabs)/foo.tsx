@@ -6,6 +6,9 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useEffect, useState } from "react";
+import * as React from 'react';
+import { DataTable } from 'react-native-paper';
+
 import { createClient } from "@supabase/supabase-js";
 const supabase = createClient("https://utlankoqlpvjmwacdzai.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0bGFua29xbHB2am13YWNkemFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4NTQxNjMsImV4cCI6MjA2MDQzMDE2M30.JpiWZ67ayIrDxrpTWDhh5LppurXaxs1Cwye-nwJz7CI");
 
@@ -48,24 +51,29 @@ export default function TabThreeScreen() {
         <ThemedText type="title">foo</ThemedText>
       </ThemedView>
       <ThemedText>
-        <ul>
+        <DataTable>
+          <DataTable.Header>
+            <DataTable.Title><ThemedText>Dessert</ThemedText></DataTable.Title>
+            <DataTable.Title numeric><ThemedText>Calories</ThemedText></DataTable.Title>
+          </DataTable.Header>
           {instruments?.map((instrument) => (
-            <li key={instrument.name}>{instrument.name}, {instrument.description}</li>
-            //  replace with table : https://www.waldo.com/blog/react-native-table
-            // https://reactnativepaper.com/
+            <DataTable.Row key={instrument.name}>
+              <DataTable.Cell><ThemedText>{instrument.name}</ThemedText></DataTable.Cell>
+              <DataTable.Cell numeric><ThemedText>{instrument.description}</ThemedText></DataTable.Cell>
+            </DataTable.Row>
           ))}
-        </ul>
+        </DataTable>
       </ThemedText>
-        <TextInput
-          style={styles.input}
-          onChangeText={setInputName}
-          value={InputName}
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={setInputDescription}
-          value={InputDescription}
-        />
+      <TextInput
+        style={styles.input}
+        onChangeText={setInputName}
+        value={InputName}
+      />
+      <TextInput
+        style={styles.input}
+        onChangeText={setInputDescription}
+        value={InputDescription}
+      />
       <Button
         title="Press me"
         onPress={() => addInstrument(InputName, InputDescription)}

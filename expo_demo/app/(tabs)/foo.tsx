@@ -55,11 +55,19 @@ export default function TabThreeScreen() {
           <DataTable.Header>
             <DataTable.Title><ThemedText>name</ThemedText></DataTable.Title>
             <DataTable.Title style={[styles.desc_column]}><ThemedText>description</ThemedText></DataTable.Title>
+            <DataTable.Title><ThemedText>[]</ThemedText></DataTable.Title>
           </DataTable.Header>
           {instruments?.map((instrument) => (
             <DataTable.Row key={instrument.name}>
               <DataTable.Cell><ThemedText>{instrument.name}</ThemedText></DataTable.Cell>
               <DataTable.Cell style={styles.desc_column}><ThemedText>{instrument.description}</ThemedText></DataTable.Cell>
+              <DataTable.Cell>
+                <Button
+                  title="Replae this with modal"
+                  onPress={() => console.log('replace this with modal')}
+                />
+              </DataTable.Cell>
+
             </DataTable.Row>
           ))}
         </DataTable>

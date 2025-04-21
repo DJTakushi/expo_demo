@@ -1,4 +1,5 @@
-import { StyleSheet, Button, TextInput, Platform } from 'react-native';
+import { Alert, StyleSheet, Button, Text, TextInput, Modal, Pressable, View } from 'react-native';
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Collapsible } from '@/components/Collapsible';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -24,6 +25,7 @@ export default function TabThreeScreen() {
   const [InputName, setInputName] = useState('instrument name');
   const [InputDescription, setInputDescription] = useState('instrument description');
   const [instruments, setInstruments] = useState<Instrument[] | null>(null);
+  const [instrument_tgt, setInstrument_tgt] = useState<Instrument | null>(null);
   useEffect(() => {
     getInstruments();
   }, []);
@@ -35,6 +37,7 @@ export default function TabThreeScreen() {
     const { data } = await supabase.from("instruments").insert({ name: name, description: desc });
     getInstruments();
   }
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <ParallaxScrollView
@@ -62,12 +65,15 @@ export default function TabThreeScreen() {
               <DataTable.Cell><ThemedText>{instrument.name}</ThemedText></DataTable.Cell>
               <DataTable.Cell style={styles.desc_column}><ThemedText>{instrument.description}</ThemedText></DataTable.Cell>
               <DataTable.Cell>
-                <Button
-                  title="Replae this with modal"
-                  onPress={() => console.log('replace this with modal')}
-                />
+                <Pressable
+                  style={[styles.button, styles.buttonOpen]}
+                  onPress={() => {
+                    setInstrument_tgt(instrument);
+                    setModalVisible(true)}}>
+                  <Text style={styles.textStyle}>edit/delete
+                  </Text>
+                </Pressable>
               </DataTable.Cell>
-
             </DataTable.Row>
           ))}
         </DataTable>
@@ -86,6 +92,29 @@ export default function TabThreeScreen() {
         title="Press me"
         onPress={() => addInstrument(InputName, InputDescription)}
       />
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.centeredView}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed');
+              setModalVisible(!modalVisible);
+            }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>{instrument_tgt?.name}</Text>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Text style={styles.textStyle}>Hide Modal</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+        </SafeAreaView>
+      </SafeAreaProvider>
     </ParallaxScrollView>
   );
 }
@@ -113,5 +142,45 @@ const styles = StyleSheet.create({
   },
   desc_column: {
     flex: 3,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
 });

@@ -17,6 +17,7 @@ const supabase = createClient("https://utlankoqlpvjmwacdzai.supabase.co", "eyJhb
     warnings in the codebase.  Defining these classes seems to be safer.
 */
 type Instrument = {
+  id: number;
   name: string;
   description: string;
 };
@@ -26,6 +27,9 @@ export default function TabThreeScreen() {
   const [InputDescription, setInputDescription] = useState('instrument description');
   const [instruments, setInstruments] = useState<Instrument[] | null>(null);
   const [instrument_tgt, setInstrument_tgt] = useState<Instrument | null>(null);
+  const [instrument_tgt_id, setInstrument_tgt_id] = useState<number>(0);
+  const [instrument_tgt_name, setInstrument_tgt_name] = useState<string>('');
+  const [instrument_tgt_description, setInstrument_tgt_description] = useState<string>('');
   useEffect(() => {
     getInstruments();
   }, []);
@@ -35,6 +39,10 @@ export default function TabThreeScreen() {
   }
   async function addInstrument(name: string, desc: string) {
     const { data } = await supabase.from("instruments").insert({ name: name, description: desc });
+    getInstruments();
+  }
+  async function updateInstrument(id: number, name: string, desc: string) {
+    const { data } = await supabase.from("instruments").update({ name: name, description: desc }).eq('id',id);
     getInstruments();
   }
   const [modalVisible, setModalVisible] = useState(false);
@@ -69,7 +77,11 @@ export default function TabThreeScreen() {
                   style={[styles.button, styles.buttonOpen]}
                   onPress={() => {
                     setInstrument_tgt(instrument);
-                    setModalVisible(true)}}>
+                    setInstrument_tgt_id(instrument.id);
+                    setInstrument_tgt_name(instrument.name);
+                    setInstrument_tgt_description(instrument.description);
+                    setModalVisible(true)
+                  }}>
                   <Text style={styles.textStyle}>edit/delete
                   </Text>
                 </Pressable>
@@ -105,6 +117,20 @@ export default function TabThreeScreen() {
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
                 <Text style={styles.modalText}>{instrument_tgt?.name}</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setInstrument_tgt_name}
+                  value={instrument_tgt_name}
+                />
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setInstrument_tgt_description}
+                  value={instrument_tgt_description}
+                />
+                <Button
+                  title="Update Instrument"
+                  onPress={() => updateInstrument(instrument_tgt_id, instrument_tgt_name, instrument_tgt_description)}
+                />
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
                   onPress={() => setModalVisible(!modalVisible)}>

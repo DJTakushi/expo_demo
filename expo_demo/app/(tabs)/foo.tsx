@@ -49,7 +49,7 @@ export default function TabThreeScreen() {
     const { data } = await supabase.from("instruments").delete().eq('id', id);
     getInstruments();
   }
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalEditVisible, setmodalEditVisible] = useState(false);
 
   return (
     <ParallaxScrollView
@@ -84,7 +84,7 @@ export default function TabThreeScreen() {
                     setInstrument_tgt_id(instrument.id);
                     setInstrument_tgt_name(instrument.name);
                     setInstrument_tgt_description(instrument.description);
-                    setModalVisible(true)
+                    setmodalEditVisible(true)
                   }}>
                   <Text style={styles.textStyle}>edit/delete
                   </Text>
@@ -113,10 +113,10 @@ export default function TabThreeScreen() {
           <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible}
+            visible={modalEditVisible}
             onRequestClose={() => {
               Alert.alert('Modal has been closed');
-              setModalVisible(!modalVisible);
+              setmodalEditVisible(!modalEditVisible);
             }}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
@@ -135,7 +135,7 @@ export default function TabThreeScreen() {
                   title="Update"
                   onPress={() => {
                     updateInstrument(instrument_tgt_id, instrument_tgt_name, instrument_tgt_description)
-                    setModalVisible(!modalVisible)
+                    setmodalEditVisible(!modalEditVisible)
                   }
                   }
                 />
@@ -143,7 +143,7 @@ export default function TabThreeScreen() {
                   title="Delete"
                   onPress={() => {
                     deleteInstrument(instrument_tgt_id)
-                    setModalVisible(!modalVisible)
+                    setmodalEditVisible(!modalEditVisible)
                   }
                   }
                 />

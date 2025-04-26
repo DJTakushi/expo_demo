@@ -26,7 +26,6 @@ export default function TabThreeScreen() {
   const [InputName, setInputName] = useState('instrument name');
   const [InputDescription, setInputDescription] = useState('instrument description');
   const [instruments, setInstruments] = useState<Instrument[] | null>(null);
-  const [instrument_tgt, setInstrument_tgt] = useState<Instrument | null>(null);
   const [instrument_tgt_id, setInstrument_tgt_id] = useState<number>(0);
   const [instrument_tgt_name, setInstrument_tgt_name] = useState<string>('');
   const [instrument_tgt_description, setInstrument_tgt_description] = useState<string>('');
@@ -82,7 +81,6 @@ export default function TabThreeScreen() {
                 <Pressable
                   style={[styles.button, styles.buttonOpen]}
                   onPress={() => {
-                    setInstrument_tgt(instrument);
                     setInstrument_tgt_id(instrument.id);
                     setInstrument_tgt_name(instrument.name);
                     setInstrument_tgt_description(instrument.description);
@@ -95,7 +93,6 @@ export default function TabThreeScreen() {
                 <Pressable
                   style={[styles.button, styles.buttonOpen]}
                   onPress={() => {
-                    setInstrument_tgt(instrument);
                     setInstrument_tgt_id(instrument.id);
                     setInstrument_tgt_name(instrument.name);
                     setmodalDeleteVisible(true)
@@ -124,7 +121,7 @@ export default function TabThreeScreen() {
             }}>
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>{instrument_tgt?.name}</Text>
+                <Text style={styles.modalText}>{instrument_tgt_name}</Text>
                 <TextInput
                   style={styles.input}
                   onChangeText={setInstrument_tgt_name}

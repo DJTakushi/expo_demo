@@ -49,6 +49,7 @@ export default function TabThreeScreen() {
     const { data } = await supabase.from("instruments").delete().eq('id', id);
     getInstruments();
   }
+  const [modalCreateVisible, setmodalCreateVisible] = useState(false);
   const [modalEditVisible, setmodalEditVisible] = useState(false);
 
   return (
@@ -94,20 +95,11 @@ export default function TabThreeScreen() {
           ))}
         </DataTable>
       </ThemedText>
-      <TextInput
-        style={styles.input}
-        onChangeText={setInputName}
-        value={InputName}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={setInputDescription}
-        value={InputDescription}
-      />
-      <Button
-        title="Press me"
-        onPress={() => addInstrument(InputName, InputDescription)}
-      />
+      <Pressable
+        style={[styles.button, styles.buttonOpen, styles.width_150]}
+        onPress={() => setmodalCreateVisible(true)}>
+        <Text style={styles.textStyle}>Create Instrument</Text>
+      </Pressable>
       <SafeAreaProvider>
         <SafeAreaView style={styles.centeredView}>
           <Modal
@@ -150,6 +142,36 @@ export default function TabThreeScreen() {
               </View>
             </View>
           </Modal>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalCreateVisible}
+            onRequestClose={() => {
+              setmodalCreateVisible(!modalCreateVisible);
+            }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Create</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setInputName}
+                  value={InputName}
+                />
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setInputDescription}
+                  value={InputDescription}
+                />
+                <Button
+                  title="Create"
+                  onPress={() => {
+                    addInstrument(InputName, InputDescription);
+                    setmodalCreateVisible(false);
+                  }}
+                />
+              </View>
+            </View>
+          </Modal>
         </SafeAreaView>
       </SafeAreaProvider>
     </ParallaxScrollView>
@@ -184,6 +206,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  width_150: {
+    width: 150,
   },
   modalView: {
     margin: 20,

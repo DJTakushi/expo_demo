@@ -42,7 +42,11 @@ export default function TabThreeScreen() {
     getInstruments();
   }
   async function updateInstrument(id: number, name: string, desc: string) {
-    const { data } = await supabase.from("instruments").update({ name: name, description: desc }).eq('id',id);
+    const { data } = await supabase.from("instruments").update({ name: name, description: desc }).eq('id', id);
+    getInstruments();
+  }
+  async function deleteInstrument(id: number) {
+    const { data } = await supabase.from("instruments").delete().eq('id', id);
     getInstruments();
   }
   const [modalVisible, setModalVisible] = useState(false);
@@ -128,14 +132,26 @@ export default function TabThreeScreen() {
                   value={instrument_tgt_description}
                 />
                 <Button
-                  title="Update Instrument"
-                  onPress={() => updateInstrument(instrument_tgt_id, instrument_tgt_name, instrument_tgt_description)}
+                  title="Update"
+                  onPress={() => {
+                    updateInstrument(instrument_tgt_id, instrument_tgt_name, instrument_tgt_description)
+                    setModalVisible(!modalVisible)
+                  }
+                  }
                 />
-                <Pressable
+                {/* <Pressable
                   style={[styles.button, styles.buttonClose]}
                   onPress={() => setModalVisible(!modalVisible)}>
                   <Text style={styles.textStyle}>Hide Modal</Text>
-                </Pressable>
+                </Pressable> */}
+                <Button
+                  title="Delete"
+                  onPress={() => {
+                    deleteInstrument(instrument_tgt_id)
+                    setModalVisible(!modalVisible)
+                  }
+                  }
+                />
               </View>
             </View>
           </Modal>

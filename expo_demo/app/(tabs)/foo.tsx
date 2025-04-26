@@ -110,6 +110,36 @@ export default function TabThreeScreen() {
       </Pressable>
       <SafeAreaProvider>
         <SafeAreaView style={styles.centeredView}>
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalCreateVisible}
+            onRequestClose={() => {
+              setmodalCreateVisible(!modalCreateVisible);
+            }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Create</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setInputName}
+                  value={InputName}
+                />
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setInputDescription}
+                  value={InputDescription}
+                />
+                <Button
+                  title="Create"
+                  onPress={() => {
+                    addInstrument(InputName, InputDescription);
+                    setmodalCreateVisible(false);
+                  }}
+                />
+              </View>
+            </View>
+          </Modal>
           <Modal
             animationType="slide"
             transparent={true}
@@ -138,36 +168,6 @@ export default function TabThreeScreen() {
                     setmodalEditVisible(!modalEditVisible)
                   }
                   }
-                />
-              </View>
-            </View>
-          </Modal>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalCreateVisible}
-            onRequestClose={() => {
-              setmodalCreateVisible(!modalCreateVisible);
-            }}>
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>Create</Text>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={setInputName}
-                  value={InputName}
-                />
-                <TextInput
-                  style={styles.input}
-                  onChangeText={setInputDescription}
-                  value={InputDescription}
-                />
-                <Button
-                  title="Create"
-                  onPress={() => {
-                    addInstrument(InputName, InputDescription);
-                    setmodalCreateVisible(false);
-                  }}
                 />
               </View>
             </View>

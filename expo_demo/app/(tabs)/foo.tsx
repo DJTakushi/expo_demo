@@ -51,6 +51,7 @@ export default function TabThreeScreen() {
   }
   const [modalCreateVisible, setmodalCreateVisible] = useState(false);
   const [modalEditVisible, setmodalEditVisible] = useState(false);
+  const [modalDeleteVisible, setmodalDeleteVisible] = useState(false);
 
   return (
     <ParallaxScrollView
@@ -71,7 +72,7 @@ export default function TabThreeScreen() {
           <DataTable.Header>
             <DataTable.Title><ThemedText>name</ThemedText></DataTable.Title>
             <DataTable.Title style={[styles.desc_column]}><ThemedText>description</ThemedText></DataTable.Title>
-            <DataTable.Title><ThemedText>[]</ThemedText></DataTable.Title>
+            <DataTable.Title><ThemedText></ThemedText></DataTable.Title>
           </DataTable.Header>
           {instruments?.map((instrument) => (
             <DataTable.Row key={instrument.name}>
@@ -87,8 +88,19 @@ export default function TabThreeScreen() {
                     setInstrument_tgt_description(instrument.description);
                     setmodalEditVisible(true)
                   }}>
-                  <Text style={styles.textStyle}>edit/delete
+                  <Text style={styles.textStyle}>edit
                   </Text>
+                </Pressable>
+              <ThemedText> / </ThemedText>
+                <Pressable
+                  style={[styles.button, styles.buttonOpen]}
+                  onPress={() => {
+                    setInstrument_tgt(instrument);
+                    setInstrument_tgt_id(instrument.id);
+                    setInstrument_tgt_name(instrument.name);
+                    setmodalDeleteVisible(true)
+                  }}>
+                  <Text style={styles.textStyle}>delete</Text>
                 </Pressable>
               </DataTable.Cell>
             </DataTable.Row>
@@ -131,14 +143,6 @@ export default function TabThreeScreen() {
                   }
                   }
                 />
-                <Button
-                  title="Delete"
-                  onPress={() => {
-                    deleteInstrument(instrument_tgt_id)
-                    setmodalEditVisible(!modalEditVisible)
-                  }
-                  }
-                />
               </View>
             </View>
           </Modal>
@@ -167,6 +171,26 @@ export default function TabThreeScreen() {
                   onPress={() => {
                     addInstrument(InputName, InputDescription);
                     setmodalCreateVisible(false);
+                  }}
+                />
+              </View>
+            </View>
+          </Modal>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalDeleteVisible}
+            onRequestClose={() => {
+              setmodalDeleteVisible(false);
+            }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Delete {instrument_tgt_name}?</Text>
+                <Button
+                  title="Delete"
+                  onPress={() => {
+                    deleteInstrument(instrument_tgt_id)
+                    setmodalDeleteVisible(false);
                   }}
                 />
               </View>

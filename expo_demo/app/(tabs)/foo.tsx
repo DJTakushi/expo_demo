@@ -1,7 +1,6 @@
 import { Alert, StyleSheet, Button, Text, TextInput, Modal, Pressable, View } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { Collapsible } from '@/components/Collapsible';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';

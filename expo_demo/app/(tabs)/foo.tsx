@@ -139,11 +139,6 @@ export default function TabThreeScreen() {
                   }
                   }
                 />
-                {/* <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible(!modalVisible)}>
-                  <Text style={styles.textStyle}>Hide Modal</Text>
-                </Pressable> */}
                 <Button
                   title="Delete"
                   onPress={() => {

@@ -91,7 +91,7 @@ export default function TabThreeScreen() {
                   <Text style={styles.textStyle}>edit
                   </Text>
                 </Pressable>
-              <ThemedText> / </ThemedText>
+                <ThemedText> / </ThemedText>
                 <Pressable
                   style={[styles.button, styles.buttonOpen]}
                   onPress={() => {

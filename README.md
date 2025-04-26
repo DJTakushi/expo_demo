@@ -21,3 +21,8 @@ When you're ready, run npm run reset-project to get a fresh app directory. This 
 ```
 
 Warnings about deprecated dependencies seems normal : https://www.reddit.com/r/expo/comments/1egsevn/dependency_issues_while_creating_a_new_app/
+
+# TODO
+- [ ] image upload
+- [ ] supabase api content moved to dedicated files
+- [ ] account management

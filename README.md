@@ -26,3 +26,5 @@ Warnings about deprecated dependencies seems normal : https://www.reddit.com/r/e
 - [ ] image upload
 - [ ] supabase api content moved to dedicated files
 - [ ] account management
+- [ ] enter edits/deletes entry
+- [ ] clicking on text-box overrides text

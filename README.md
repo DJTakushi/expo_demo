@@ -26,5 +26,9 @@ Warnings about deprecated dependencies seems normal : https://www.reddit.com/r/e
 - [ ] image upload
 - [ ] supabase api content moved to dedicated files
 - [ ] account management
+  - [ ] display account-name in tabs
+  - [ ] finish tutorial (https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native)
+  - [ ] permissions for create, update, delete
+  - [ ] Google login
 - [ ] enter edits/deletes entry
 - [ ] clicking on text-box overrides text

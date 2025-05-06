@@ -44,7 +44,14 @@ export default function TabLayout() {
         name="foo"
         options={{
           title: 'foo',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="heart.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="lighting" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="accountManagement"
+        options={{
+          title: 'accountManagement',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="user" color={color} />,
         }}
       />
     </Tabs>

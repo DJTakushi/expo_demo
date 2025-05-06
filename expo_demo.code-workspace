@@ -5,7 +5,16 @@
 		}
 	],
 	"settings": {
+		"window.autoDetectColorScheme": true,
+		"workbench.preferredDarkColorTheme": "Tokyo Night",
+		"workbench.preferredHighContrastLightColorTheme": "Tokyo Night Light",
 		"editor.tabSize": 2,
 		"editor.renderWhitespace": "all",
+		"editor.rulers": [
+			{
+				"column": 80,
+				"color": "#80ffff"
+			},
+		],
 	}
 }

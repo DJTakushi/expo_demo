@@ -8,9 +8,9 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useEffect, useState } from "react";
 import * as React from 'react';
 import { DataTable } from 'react-native-paper';
+import { supabase } from '../../lib/supabase'
+import { Session } from '@supabase/supabase-js'
 
-import { createClient } from "@supabase/supabase-js";
-const supabase = createClient("https://utlankoqlpvjmwacdzai.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0bGFua29xbHB2am13YWNkemFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4NTQxNjMsImV4cCI6MjA2MDQzMDE2M30.JpiWZ67ayIrDxrpTWDhh5LppurXaxs1Cwye-nwJz7CI");
 
 /* this isn't in the official docs, but the official examples for produce 
     warnings in the codebase.  Defining these classes seems to be safer.
@@ -22,6 +22,16 @@ type Instrument = {
 };
 
 export default function TabThreeScreen() {
+  const [session, setSession] = useState<Session | null>(null)
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+
   const [InputName, setInputName] = useState('instrument name');
   const [InputDescription, setInputDescription] = useState('instrument description');
   const [instruments, setInstruments] = useState<Instrument[] | null>(null);

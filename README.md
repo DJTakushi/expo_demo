@@ -24,10 +24,11 @@ Warnings about deprecated dependencies seems normal : https://www.reddit.com/r/e
 
 # TODO
 - [ ] image upload
+  - [ ] avatar with multiple formats
 - [ ] supabase api content moved to dedicated files
 - [ ] account management
   - [ ] display account-name in tabs
-  - [ ] finish tutorial (https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native)
+  - [x] finish tutorial (https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native)
   - [x] permissions for create, update, delete
   - [ ] Google login
 - [ ] enter edits/deletes entry

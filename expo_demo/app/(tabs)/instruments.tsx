@@ -73,7 +73,7 @@ export default function TabThreeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">foo</ThemedText>
+        <ThemedText type="title">instruments</ThemedText>
       </ThemedView>
       <ThemedText>
         <DataTable>

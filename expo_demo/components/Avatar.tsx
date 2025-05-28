@@ -56,7 +56,6 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
       }
 
       const image = result.assets[0]
-      console.log('Got image', image)
 
       if (!image.uri) {
         throw new Error('No image uri!') // Realistically, this should never happen, but just in case...
@@ -64,8 +63,8 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
 
       const arraybuffer = await fetch(image.uri).then((res) => res.arrayBuffer())
 
-      const fileExt = image.uri?.split('.').pop()?.toLowerCase() ?? 'jpeg'
-      const path = `${Date.now()}.${fileExt}`
+      const fileExt = image.fileName?.split('.').pop()?.toLowerCase() ?? 'jpeg'
+      const path = `${Date.now()}_${image.fileName}.${fileExt}`
       const { data, error: uploadError } = await supabase.storage
         .from('avatars')
         .upload(path, arraybuffer, {

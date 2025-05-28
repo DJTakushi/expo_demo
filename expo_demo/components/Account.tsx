@@ -11,9 +11,15 @@ export default function Account({ session }: { session: Session }) {
   const [website, setWebsite] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
 
+  // useEffect(() => {
+  //   if (session) getProfile()
+  // }, [session])
   useEffect(() => {
-    if (session) getProfile()
-  }, [session])
+    if (loading) {
+      getProfile();
+      setLoading(false)
+    }
+  }, [loading])
 
   async function getProfile() {
     try {

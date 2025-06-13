@@ -19,19 +19,10 @@ type gallery_images = {
   url: string;
 };
 
-type Profile = {
-  username: string;
-  avatar_url: string;
-  // avatar_url_full: string;
-};
-
 export default function TabFourScreen() {
   const [session, setSession] = React.useState<Session | null>(null)
-  const [profiles, setProfiles] = React.useState<Profile[] | null>([]);
-  const [imageUrls, setImageUrls] = React.useState<string[]>([]);
   const [galleryImages, setGalleryImages] = React.useState<gallery_images[] | null>([]);
   const [galleryImageUrls, setGalleryImageUrls] = React.useState<string[]>([]);
-  const avatarSize = { height: 150, width: 150 }
   const galleryImageSize = { height: 800, width: 1200 }
 
   React.useEffect(() => {
@@ -41,57 +32,9 @@ export default function TabFourScreen() {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
-    getProfiles();
     getGalleryImages();
   }, []);
 
-  // gets profiles
-  async function getProfiles() {
-    const { data } = await supabase.from("profiles").select();
-    setProfiles(data);
-
-    // add updateFullUrl process for each profile object
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].avatar_url) {
-        await updateFullUrl(data[i].avatar_url, i);
-      } else {
-      }
-    }
-  }
-
-  // updates imageUrls asynchronously`
-  async function updateFullUrl(path: string, idx: number) {
-    var fullUrlPath = "";
-    try {
-      const { data, error } = await supabase.storage.from('avatars').download(path)
-
-      if (error) {
-        throw error
-      }
-
-      const fr = new FileReader()
-      fr.readAsDataURL(data)
-      fr.onload = () => {
-        fullUrlPath = fr.result as string
-
-        const newImageUrls = [...imageUrls]; // Create a new array to avoid mutating the state directly
-        newImageUrls[idx] = fullUrlPath; // Store the full URL in the new array
-        setImageUrls(newImageUrls); // Update the state with the new array
-
-        // This often finishes before profiles were loaded, causing errors
-        // var profilesNew = [...profiles]; // Create a new array to avoid mutating the state directly
-        // console.log("profilesNew", profilesNew);
-        // profilesNew[idx].avatar_url_full = fullUrlPath; // Store the full URL in the profile object
-        // setProfiles(profilesNew); // Update the state with the new profiles array
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log('Error downloading image: ', error.message)
-      }
-    }
-  }
-
-  // gets profiles
   async function getGalleryImages() {
     const { data } = await supabase.from("gallery_images").select();
     console.log("galleryImages", data);
@@ -166,30 +109,6 @@ export default function TabFourScreen() {
         </View>
       ))}
 
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">team</ThemedText>
-      </ThemedView>
-      <DataTable>
-        <DataTable.Header>
-          <DataTable.Title><ThemedText>name</ThemedText></DataTable.Title>
-          <DataTable.Title><ThemedText>avatar_url</ThemedText></DataTable.Title>
-          <DataTable.Title><ThemedText>avatar</ThemedText></DataTable.Title>
-        </DataTable.Header>
-        {profiles?.map((profile) => (
-          <DataTable.Row key={profile.username}>
-            <DataTable.Cell><ThemedText>{profile.username}</ThemedText></DataTable.Cell>
-            <DataTable.Cell style={styles.desc_column}><ThemedText>{profile.avatar_url}</ThemedText></DataTable.Cell>
-            <DataTable.Cell style={styles.desc_column}><ThemedText>
-              <Image
-                source={{ uri: imageUrls[profiles.indexOf(profile)] }}
-                // source={{ uri: profile.avatar_url_full }}
-                accessibilityLabel="Avatar"
-                style={[avatarSize, styles.avatar, styles.image]}
-              />
-            </ThemedText></DataTable.Cell>
-          </DataTable.Row>
-        ))}
-      </DataTable>
     </ParallaxScrollView>
   );
 }

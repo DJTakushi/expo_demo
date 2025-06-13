@@ -20,18 +20,11 @@ type gallery_images = {
 };
 
 export default function TabFourScreen() {
-  const [session, setSession] = React.useState<Session | null>(null)
   const [galleryImages, setGalleryImages] = React.useState<gallery_images[] | null>([]);
   const [galleryImageUrls, setGalleryImageUrls] = React.useState<string[]>([]);
   const galleryImageSize = { height: 800, width: 1200 }
 
   React.useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
     getGalleryImages();
   }, []);
 

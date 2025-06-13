@@ -1,5 +1,4 @@
-import { Alert, StyleSheet, Button, Text, TextInput, Modal, Pressable, View, Image } from 'react-native';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import { StyleSheet, View, Image } from 'react-native';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
@@ -7,8 +6,6 @@ import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import * as React from 'react';
 import { supabase } from '../../lib/supabase'
-import { Session } from '@supabase/supabase-js'
-import { DataTable } from 'react-native-paper';
 import { Timestamp } from 'react-native-reanimated/lib/typescript/commonTypes';
 
 type gallery_images = {

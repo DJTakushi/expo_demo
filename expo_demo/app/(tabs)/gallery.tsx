@@ -33,8 +33,8 @@ export default function TabFourScreen() {
     for (let i = 0; i < data.length; i++) {
       if (data[i].url) {
         await updateGalleryFullUrl(data[i].url, i);
-        
-        data[i].url = "https://utlankoqlpvjmwacdzai.supabase.co/storage/v1/object/public/gallerypictures/" + data[i].url;
+
+        data[i].url = supabase.storage.from('gallerypictures').getPublicUrl(data[i].url).data.publicUrl;
       } else {
       }
     }
